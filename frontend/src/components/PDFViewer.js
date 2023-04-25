@@ -1,5 +1,5 @@
 import React, { useRef, useEffect, useState } from 'react'
-import { Document, Page } from 'react-pdf/dist/esm/entry.webpack'
+
 import 'react-pdf/dist/esm/Page/AnnotationLayer.css'
 import { Document, Page, pdfjs } from 'react-pdf/dist/esm/entry.webpack'
 import PdfWorker from 'worker-loader!pdfjs-dist/es5/build/pdf.worker.js'
