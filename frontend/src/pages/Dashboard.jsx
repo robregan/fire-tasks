@@ -1,12 +1,14 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import GoalForm from '../components/GoalForm'
 import GoalItem from '../components/GoalItem'
 import Spinner from '../components/Spinner'
+import PDFViewer from '../components/PDFViewer'
 import { getGoals, reset } from '../features/goals/goalSlice'
 
 function Dashboard() {
+  const [pdfUrl, setPdfUrl] = useState('/backend/pdfs/pms-311-13.pdf')
   const navigate = useNavigate()
   const dispatch = useDispatch()
 
@@ -41,6 +43,15 @@ function Dashboard() {
         <h1>Welcome {user && user.name}</h1>
         <p>Tasks Dashboard</p>
       </section>
+      <div>
+        <input
+          type='text'
+          value={pdfUrl}
+          onChange={(e) => setPdfUrl(e.target.value)}
+          placeholder='Enter PDF URL'
+        />
+        <PDFViewer url={pdfUrl} />
+      </div>
 
       <GoalForm />
 

@@ -182,6 +182,21 @@ h3 {
   align-items: center;
 }
 
+.pdf-viewer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem;
+  border: 1px solid #ccc;
+  background-color: #f8f8f8;
+}
+
+.react-pdf__Page__canvas {
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  max-width: 100%;
+}
+
+
 .loadingSpinner {
   width: 64px;
   height: 64px;
