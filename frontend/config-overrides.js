@@ -22,5 +22,11 @@ module.exports = function override(config, env) {
     })
   )
 
+  // Add worker-loader configuration
+  config.module.rules.push({
+    test: /\.worker\.js$/,
+    use: { loader: 'worker-loader' },
+  })
+
   return config
 }
