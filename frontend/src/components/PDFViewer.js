@@ -2,7 +2,8 @@ import React, { useRef, useEffect, useState } from 'react'
 
 import 'react-pdf/dist/esm/Page/AnnotationLayer.css'
 import { Document, Page, pdfjs } from 'react-pdf/dist/esm/entry.webpack'
-import PdfWorker from 'worker-loader!pdfjs-dist/es5/build/pdf.worker.js'
+
+import PdfWorker from 'worker-loader!pdf.worker'
 
 const PDFViewer = ({ url }) => {
   pdfjs.GlobalWorkerOptions.workerSrc = PdfWorker
