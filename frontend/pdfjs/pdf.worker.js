@@ -1,0 +1,1 @@
+../../../node_modules/pdfjs-dist/es5/build/pdf.worker.js

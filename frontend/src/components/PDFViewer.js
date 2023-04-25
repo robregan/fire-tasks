@@ -1,42 +1,51 @@
-import React, { useRef, useEffect, useState } from 'react'
-
-import 'react-pdf/dist/esm/Page/AnnotationLayer.css'
+import React, { useState } from 'react'
 import { Document, Page, pdfjs } from 'react-pdf/dist/esm/entry.webpack'
 
-import PdfWorker from 'worker-loader!pdf.worker'
+pdfjs.GlobalWorkerOptions.workerSrc = `${process.env.PUBLIC_URL}/pdfjs/pdf.worker.js`
 
-const PDFViewer = ({ url }) => {
-  pdfjs.GlobalWorkerOptions.workerSrc = PdfWorker
-
-  pdfjs.GlobalWorkerOptions.workerSrc =
-    process.env.PUBLIC_URL + '/static/js/pdf.worker.js'
-
-  const containerRef = useRef()
-  const isMounted = useRef(true)
+const PDFViewer = () => {
   const [numPages, setNumPages] = useState(null)
+  const [pageNumber, setPageNumber] = useState(1)
 
-  useEffect(() => {
-    return () => {
-      isMounted.current = false
-    }
-  }, [])
+  const onDocumentLoadSuccess = ({ numPages }) => {
+    setNumPages(numPages)
+  }
 
-  useEffect(() => {
-    if (containerRef.current && isMounted.current) {
-      containerRef.current.scrollIntoView({ behavior: 'smooth' })
-    }
-  }, [url])
+  const changePage = (offset) => {
+    setPageNumber((prevPageNumber) => prevPageNumber + offset)
+  }
+
+  const previousPage = () => {
+    changePage(-1)
+  }
+
+  const nextPage = () => {
+    changePage(1)
+  }
 
   return (
-    <div ref={containerRef} className='pdf-viewer'>
+    <div>
       <Document
-        file={url}
-        onLoadSuccess={({ numPages }) => setNumPages(numPages)}
+        file={`${process.env.PUBLIC_URL}/pdfs/sample.pdf`}
+        onLoadSuccess={onDocumentLoadSuccess}
       >
-        {Array.from(new Array(numPages), (_, index) => (
-          <Page key={`page_${index + 1}`} pageNumber={index + 1} />
-        ))}
+        <Page pageNumber={pageNumber} />
       </Document>
+      <div>
+        <button type='button' disabled={pageNumber <= 1} onClick={previousPage}>
+          Previous
+        </button>
+        <button
+          type='button'
+          disabled={pageNumber >= numPages}
+          onClick={nextPage}
+        >
+          Next
+        </button>
+      </div>
+      <p>
+        Page {pageNumber} of {numPages}
+      </p>
     </div>
   )
 }
